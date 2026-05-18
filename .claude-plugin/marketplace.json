@@ -71,6 +71,17 @@
         "ref": "main"
       },
       "category": "productivity"
+    },
+    {
+      "name": "ionstudio-init",
+      "description": "Set up a new ionstudioapps dev environment — repos, tools, Claude skills, and env vars in one shot",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/ionstudioapps/claude-skills.git",
+        "path": "plugins/ionstudio-init",
+        "ref": "main"
+      },
+      "category": "productivity"
     }
   ]
 }

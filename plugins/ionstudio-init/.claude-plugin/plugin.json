@@ -1,0 +1,5 @@
+{
+  "name": "ionstudio-init",
+  "version": "1.0.0",
+  "description": "Set up a new ionstudioapps dev environment — repos, tools, Claude skills, and env vars in one shot"
+}
