@@ -9,7 +9,12 @@ Create a Google Calendar event with a Google Meet link using Rocky's credentials
 
 ## Credentials
 
-Load from Rocky's `.env` at `/Users/Sua/Projects/rocky/.env`:
+Load credentials with:
+```bash
+source ~/.ionstudio/rocky.env 2>/dev/null || source ~/Projects/rocky/.env 2>/dev/null
+```
+
+Required vars from:
 - `GOOGLE_CLIENT_ID`
 - `GOOGLE_CLIENT_SECRET`
 - `GOOGLE_REFRESH_TOKEN`
@@ -20,7 +25,7 @@ Load from Rocky's `.env` at `/Users/Sua/Projects/rocky/.env`:
 Before asking the user for emails, look up team members by name from the team accounts DB:
 
 ```bash
-source /Users/Sua/Projects/rocky/.env
+source ~/.ionstudio/rocky.env 2>/dev/null || source ~/Projects/rocky/.env 2>/dev/null
 
 curl -s -X POST "https://api.notion.com/v1/databases/348e381c1b4780e3bab6ecd73bdae2f4/query" \
   -H "Authorization: Bearer ${NOTION_API_KEY}" \
@@ -70,7 +75,7 @@ If not provided in the request, ask for:
 ## Step 3 — Get a Google access token
 
 ```bash
-source /Users/Sua/Projects/rocky/.env
+source ~/.ionstudio/rocky.env 2>/dev/null || source ~/Projects/rocky/.env 2>/dev/null
 
 ACCESS_TOKEN=$(curl -s -X POST "https://oauth2.googleapis.com/token" \
   -d "client_id=${GOOGLE_CLIENT_ID}" \
@@ -120,7 +125,7 @@ print(f'   MEET_LINK={meet}')
 ## Step 5 — Post to Slack (if requested)
 
 ```bash
-source /Users/Sua/Projects/rocky/.env
+source ~/.ionstudio/rocky.env 2>/dev/null || source ~/Projects/rocky/.env 2>/dev/null
 
 curl -s -X POST "https://slack.com/api/chat.postMessage" \
   -H "Authorization: Bearer ${SLACK_BOT_TOKEN}" \

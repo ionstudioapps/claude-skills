@@ -122,25 +122,33 @@ npm install --prefix "$HOME/Projects/rocky"
 
 ---
 
-## Step 6 — Set up Rocky environment
+## Step 6 — Set up environment secrets
+
+Clone the private secrets repo and copy env files into place:
 
 ```bash
-if [ ! -f "$HOME/Projects/rocky/.env" ]; then
-  cp "$HOME/Projects/rocky/env.example" "$HOME/Projects/rocky/.env"
-  echo "Created rocky/.env from env.example"
+SECRETS_DIR="$HOME/.ionstudio/secrets"
+
+# Clone or pull secrets repo
+if [ -d "$SECRETS_DIR/.git" ]; then
+  echo "Pulling latest secrets..."
+  git -C "$SECRETS_DIR" pull
 else
-  echo "rocky/.env already exists"
+  echo "Cloning secrets repo..."
+  git clone git@github-ionstudio:ionstudioapps/secrets.git "$SECRETS_DIR"
 fi
+
+# Create shared env dir
+mkdir -p "$HOME/.ionstudio"
+
+# Copy rocky.env to both the shared location and rocky project
+cp "$SECRETS_DIR/rocky.env" "$HOME/.ionstudio/rocky.env"
+cp "$SECRETS_DIR/rocky.env" "$HOME/Projects/rocky/.env"
+
+echo "✅ Environment files installed"
 ```
 
-Tell the user which values need to be filled in manually:
-- `SLACK_BOT_TOKEN` — ask Sua for the token or create a new Slack app
-- `SLACK_SIGNING_SECRET` — from the Slack app settings
-- `ANTHROPIC_API_KEY` — from console.anthropic.com
-- `NOTION_API_KEY` — from notion.so/my-integrations
-- `NOTION_TASKS_DATABASE_ID`, `NOTION_USERS_DATABASE_ID`, `NOTION_MEMORY_DATABASE_ID`, `NOTION_CONVERSATIONS_DATABASE_ID` — ask Sua
-- `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` — from Google Cloud Console
-- `GOOGLE_REFRESH_TOKEN` — run `node scripts/google-auth.js` after filling in the above
+If the clone fails (no org access yet), tell the user to ask Sua (alexsuakim@gmail.com) for access to ionstudioapps/secrets.
 
 ---
 

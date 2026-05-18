@@ -16,6 +16,11 @@ The following must be set in the user's environment (from Rocky's `.env`):
 
 GitHub uses the `gh` CLI (already authenticated).
 
+Load credentials with:
+```bash
+source ~/.ionstudio/rocky.env 2>/dev/null || source ~/Projects/rocky/.env 2>/dev/null
+```
+
 ---
 
 ## Step 1 — GitHub activity
