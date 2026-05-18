@@ -50,6 +50,8 @@ for r in data.get('results', []):
 
 Match attendee names mentioned by the user (case-insensitive) to emails. If a name isn't in the list, ask the user for their email.
 
+Always include **Sua (alexsuakim@gmail.com)** as an attendee, even if not mentioned.
+
 ## Step 2 — Gather remaining details
 
 If not provided in the request, ask for:
