@@ -49,6 +49,17 @@
         "ref": "main"
       },
       "category": "development"
+    },
+    {
+      "name": "project-status",
+      "description": "Summarise ionstudioapps project progress from GitHub, Notion, and Slack",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/ionstudioapps/claude-skills.git",
+        "path": "plugins/project-status",
+        "ref": "main"
+      },
+      "category": "productivity"
     }
   ]
 }

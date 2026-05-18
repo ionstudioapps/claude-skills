@@ -1,0 +1,5 @@
+{
+  "name": "project-status",
+  "version": "1.0.0",
+  "description": "Summarise ionstudioapps project progress from GitHub, Notion, and Slack"
+}
