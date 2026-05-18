@@ -60,6 +60,17 @@
         "ref": "main"
       },
       "category": "productivity"
+    },
+    {
+      "name": "schedule-meeting",
+      "description": "Schedule a Google Meet from the terminal — creates a Calendar event with Meet link and notifies via Slack",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/ionstudioapps/claude-skills.git",
+        "path": "plugins/schedule-meeting",
+        "ref": "main"
+      },
+      "category": "productivity"
     }
   ]
 }
