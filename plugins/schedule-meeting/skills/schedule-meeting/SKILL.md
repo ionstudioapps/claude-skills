@@ -17,12 +17,12 @@ Load from Rocky's `.env` at `/Users/Sua/Projects/rocky/.env`:
 
 ## Step 1 — Resolve attendees from Notion
 
-Before asking the user for emails, look up team members by name from the Notion users DB:
+Before asking the user for emails, look up team members by name from the team accounts DB:
 
 ```bash
 source /Users/Sua/Projects/rocky/.env
 
-curl -s -X POST "https://api.notion.com/v1/databases/${NOTION_USERS_DATABASE_ID}/query" \
+curl -s -X POST "https://api.notion.com/v1/databases/348e381c1b4780e3bab6ecd73bdae2f4/query" \
   -H "Authorization: Bearer ${NOTION_API_KEY}" \
   -H "Notion-Version: 2022-06-28" \
   -H "Content-Type: application/json" \
@@ -31,16 +31,24 @@ import sys, json
 data = json.load(sys.stdin)
 for r in data.get('results', []):
     props = r['properties']
-    name = props.get('Name', {}).get('rich_text', [{}])
-    email = props.get('Google Email', {}).get('email', None)
+    name = props.get('Name', {}).get('title', [{}])
+    gmail = props.get('Gmail', {}).get('email', None) or props.get('Gmail', {}).get('rich_text', [{}])
     name_val = name[0].get('plain_text','') if name else ''
-    if name_val or email:
-        print(f'{name_val}: {email}')
+    if isinstance(gmail, list):
+        gmail = gmail[0].get('plain_text','') if gmail else None
+    if name_val and name_val.lower() != 'rocky':
+        print(f'{name_val}: {gmail}')
 "
 ```
 
-Match attendee names mentioned by the user (case-insensitive) to emails from this list.
-If a name isn't found or has no Google Email, ask the user for that person's email.
+**Team directory:**
+- Sua: alexsuakim@gmail.com
+- Amithi: aliyanagamage@gmail.com
+- Jade: lilykang0331@gmail.com
+- Paoli: paolamarkart@gmail.com
+- Johanna: johannaschwabe01@gmail.com
+
+Match attendee names mentioned by the user (case-insensitive) to emails. If a name isn't in the list, ask the user for their email.
 
 ## Step 2 — Gather remaining details
 
