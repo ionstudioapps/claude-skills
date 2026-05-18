@@ -15,16 +15,42 @@ Load from Rocky's `.env` at `/Users/Sua/Projects/rocky/.env`:
 - `GOOGLE_REFRESH_TOKEN`
 - `SLACK_BOT_TOKEN` (optional — for Slack notification)
 
-## Step 1 — Gather details
+## Step 1 — Resolve attendees from Notion
+
+Before asking the user for emails, look up team members by name from the Notion users DB:
+
+```bash
+source /Users/Sua/Projects/rocky/.env
+
+curl -s -X POST "https://api.notion.com/v1/databases/${NOTION_USERS_DATABASE_ID}/query" \
+  -H "Authorization: Bearer ${NOTION_API_KEY}" \
+  -H "Notion-Version: 2022-06-28" \
+  -H "Content-Type: application/json" \
+  -d '{}' | python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+for r in data.get('results', []):
+    props = r['properties']
+    name = props.get('Name', {}).get('rich_text', [{}])
+    email = props.get('Google Email', {}).get('email', None)
+    name_val = name[0].get('plain_text','') if name else ''
+    if name_val or email:
+        print(f'{name_val}: {email}')
+"
+```
+
+Match attendee names mentioned by the user (case-insensitive) to emails from this list.
+If a name isn't found or has no Google Email, ask the user for that person's email.
+
+## Step 2 — Gather remaining details
 
 If not provided in the request, ask for:
 - **Title** — what is the meeting about?
 - **Date & time** — when? (resolve relative times like "tomorrow 3pm" to ISO8601 in Asia/Seoul timezone)
 - **Duration** — how long? (default: 1 hour)
-- **Attendees** — email addresses (check Rocky's Notion users DB or ask)
 - **Slack channel** — post the Meet link there? (optional)
 
-## Step 2 — Get a Google access token
+## Step 3 — Get a Google access token
 
 ```bash
 source /Users/Sua/Projects/rocky/.env
@@ -38,7 +64,7 @@ ACCESS_TOKEN=$(curl -s -X POST "https://oauth2.googleapis.com/token" \
 echo "Token: $ACCESS_TOKEN"
 ```
 
-## Step 3 — Create the Calendar event
+## Step 4 — Create the Calendar event
 
 ```bash
 # Build attendees JSON array from emails
@@ -74,7 +100,7 @@ print(f'   MEET_LINK={meet}')
 "
 ```
 
-## Step 4 — Post to Slack (if requested)
+## Step 5 — Post to Slack (if requested)
 
 ```bash
 source /Users/Sua/Projects/rocky/.env
