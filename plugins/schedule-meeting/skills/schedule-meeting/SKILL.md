@@ -50,7 +50,14 @@ for r in data.get('results', []):
 
 Match attendee names mentioned by the user (case-insensitive) to emails. If a name isn't in the list, ask the user for their email.
 
-Always include **Sua (alexsuakim@gmail.com)** as an attendee, even if not mentioned.
+Always include the person who called the skill as an attendee. Detect them by running:
+
+```bash
+GH_USER=$(gh api user --jq '.login' 2>/dev/null)
+echo "Current GitHub user: $GH_USER"
+```
+
+Then cross-reference with the Notion accounts DB — match `GitHub` field (which contains the GitHub URL or username) against `GH_USER`. Use their `Gmail` as their email. If no match is found, skip silently.
 
 ## Step 2 — Gather remaining details
 
