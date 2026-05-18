@@ -1,0 +1,5 @@
+{
+  "name": "deploy",
+  "version": "1.0.0",
+  "description": "Deployment workflows — EAS builds for wheeltodo mobile and Vercel for web"
+}

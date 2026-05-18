@@ -1,0 +1,5 @@
+{
+  "name": "pr-description",
+  "version": "1.0.0",
+  "description": "Generate consistent PR descriptions for ionstudioapps repos"
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "ionstudioapps-skills",
+  "description": "Shared Claude Code skills for ionstudioapps team — code review, deployment, Rocky bot, and PR workflows",
+  "owner": {
+    "name": "ionstudioapps"
+  },
+  "plugins": [
+    {
+      "name": "code-review",
+      "description": "ionstudioapps code review style guide — TypeScript, React Native, and Node.js conventions",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/ionstudioapps/claude-skills.git",
+        "path": "plugins/code-review",
+        "ref": "main"
+      },
+      "category": "development"
+    },
+    {
+      "name": "deploy",
+      "description": "Deployment workflows — EAS builds for wheeltodo mobile and Vercel for web",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/ionstudioapps/claude-skills.git",
+        "path": "plugins/deploy",
+        "ref": "main"
+      },
+      "category": "devops"
+    },
+    {
+      "name": "rocky-debug",
+      "description": "Rocky bot setup and debugging — Slack, Notion, Google Calendar integrations",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/ionstudioapps/claude-skills.git",
+        "path": "plugins/rocky-debug",
+        "ref": "main"
+      },
+      "category": "development"
+    },
+    {
+      "name": "pr-description",
+      "description": "Generate consistent PR descriptions for ionstudioapps repos",
+      "source": {
+        "source": "git-subdir",
+        "url": "https://github.com/ionstudioapps/claude-skills.git",
+        "path": "plugins/pr-description",
+        "ref": "main"
+      },
+      "category": "development"
+    }
+  ]
+}
